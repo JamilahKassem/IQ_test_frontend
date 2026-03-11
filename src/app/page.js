@@ -1,17 +1,32 @@
 'use client'
+import Qeustion from "@/app/shared/Question";
+import ConnectSocket from "@/app/shared/connectSocket";
+import {useState,useRef } from "react";
 import Login from '@/app/shared/Login';
+import NextQeustion from "@/app/shared/Admin";
 import {useAuth} from "@/app/shared/AuthContext";
 
 function App() {
-  const { login, user, logout, loading } = useAuth();
-  const debug = false;
+    const { login, user, logout, loading } = useAuth();
+    const debug = false;
+    const socketRef = useRef(null);
+    const [qid, set_qid] = useState(-1);
+    const [phase, set_phase] = useState(0);
+    const [next, set_next] = useState(0);
+    let phases = ["Error","Disconnected","Connected","Get Ready","Answer Question","Finished"]
+    function set_context(socket){socketRef.current = socket;}
+    function handleNext(){NextQeustion({ debug })}
   if (!user) {return (
       <>
         <Login login={login} user={user} logout={logout} loading={loading} debug={debug} />
       </>);}
   return (
       <>
-        <Login login={login} user={user} logout={logout} loading={loading} debug={debug} />
+          <Login login={login} user={user} logout={logout} loading={loading} debug={debug} />
+          {phase !==4 && <p className="text-center fs-1">{!user.admin && user.name} {phases[phase]} {(user.admin && phase > 2) && <>Question ({next})</>}</p>}
+          {(user.admin && phase === 3) && <div className="d-sm-flex align-items-center gap-3"><button className="btn btn-success center-self text-black mb-3 w-25" onClick={handleNext}>Next</button></div>}
+          <ConnectSocket set_qid={set_qid} set_phase={set_phase} set_context={set_context} set_next={set_next} debug={debug}/>
+          <Qeustion qid={qid} phase={phase} user={user} debug={debug}/>
       </>
   );
 }
