@@ -1,5 +1,4 @@
 import { AuthProvider } from "./shared/AuthContext";
-import { Template } from "./shared/template";
 import "./css/theme.css";
 import React from "react";
 
@@ -15,9 +14,13 @@ export default function RootLayout({ children }: RootLayoutProps) {
     </head>
     <body>
     <AuthProvider>
-        <Template>
-            {children}
-        </Template>
+        <main>
+            <section>
+                <div>
+                    {children}
+                </div>
+            </section>
+        </main>
     </AuthProvider>
     </body>
     </html>
