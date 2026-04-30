@@ -1,10 +1,10 @@
 'use client'
-import Qeustion from "@/app/shared/Question";
-import ConnectSocket from "@/app/shared/connectSocket";
+import Qeustion from "./shared/Question";
+import ConnectSocket from "./shared/connectSocket";
 import {useState,useRef } from "react";
-import Login from '@/app/shared/Login';
-import NextQeustion from "@/app/shared/Admin";
-import {useAuth} from "@/app/shared/AuthContext";
+import Login from './shared/Login.tsx';
+import NextQeustion from "./shared/Admin.ts";
+import {useAuth} from "./shared/AuthContext";
 
 function App()
 {

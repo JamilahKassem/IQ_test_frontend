@@ -1,28 +1,25 @@
+'use server';
 import {prisma} from "../../../lib/prisma";
 import bcrypt from "bcrypt";
 
 export async function loginUser(userData: { userId: number, password: string, isAdmin: boolean }) {
     // 1. Find the user by ID
     let user;
+    const condition = {
+        where :{
+            id: userData.userId
+        },
+    };
     if(userData.isAdmin){
-        user = await prisma.admin.findUnique({
-            where: {
-                id: userData.userId,
-            },
-        });
+        user = await prisma.admin.findUnique(condition);
     }else{
-        user = await prisma.user.findUnique({
-            where: {
-                id: userData.userId,
-            },
-        });
+        user = await prisma.user.findUnique(condition);
     }
 
     // 2. If user doesn't exist, return early
     if (!user) {
         throw new Error("Invalid ID or password");
     }
-
     // 3. Compare the provided password with the stored hash
     const isPasswordValid = await bcrypt.compare(userData.password, user.password);
 

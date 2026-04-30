@@ -1,8 +1,12 @@
-import { AuthProvider } from "@/app/shared/AuthContext";
-import { Template } from "@/app/shared/template";
-import "@/app/css/theme.css";
+import { AuthProvider } from "./shared/AuthContext";
+import { Template } from "./shared/template";
+import "./css/theme.css";
+import React from "react";
 
-export default function RootLayout({ children }) {
+interface RootLayoutProps {
+    children: React.ReactNode;
+}
+export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en" className="scroll-smooth">
     <head>

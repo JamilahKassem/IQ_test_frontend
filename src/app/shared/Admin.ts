@@ -1,7 +1,10 @@
 'use client'
 import { request } from './connectHTTP';
 
-function NextQeustion({ debug }) {
+interface AdminProps {
+    debug?: boolean;
+}
+function NextQeustion({ debug = false }: AdminProps) {
     const fetchData = async () => {
         try {
             await request(`next`,debug);

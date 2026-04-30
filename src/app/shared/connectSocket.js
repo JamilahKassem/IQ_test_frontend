@@ -1,6 +1,6 @@
 'use client'
 import { useEffect,useRef } from "react";
-import config from "@/app/config/config";
+import config from "../config/config";
 function ConnectSocket({ set_phase, set_qid, set_next, set_context, debug }) {
     const socket = useRef(null);
     let port = config.portSocket;
